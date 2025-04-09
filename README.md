@@ -409,8 +409,8 @@
         });
 
         // 사이트 경유 경로 체크
-        if (document.referrer !== "https://yousoo68.github.io/ssul/") {
-            window.location.href = "https://yousoo68.github.io/ssul/";
+        if (document.referrer !== "https://yousoo68.github.io/SSUL/") {
+            window.location.href = "https://yousoo68.github.io/SSUL/";
         }
     </script>
 </body>
