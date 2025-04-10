@@ -17,6 +17,22 @@
         .btn:active{background:#3a56d4}
         .user-info{position:fixed;bottom:16px;background:#fff;padding:8px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);font-size:0.9rem;display:flex;align-items:center;gap:8px}
         .logout-btn{background:#ff4757;color:#fff;border:none;border-radius:4px;padding:4px 8px;cursor:pointer}
+        .access-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .full-access {
+            background-color: #4361ee;
+            color: white;
+        }
+        .limited-access {
+            background-color: #4cc9f0;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -28,17 +44,25 @@
 
     <div id="user-info" class="user-info" style="display:none">
         <span id="user-email"></span>
+        <span id="access-type" class="access-badge"></span>
         <button id="logout-btn" class="logout-btn">로그아웃</button>
     </div>
 
-    <div class="container" style="display:none">
-        <div class="title">섹시유수 썰 비번 모음</div>
+    <div id="full-access-container" class="container" style="display:none">
+        <div class="title">섹시유수 썰 비번 모음 <span class="access-badge full-access">전체 접근 권한</span></div>
         <div class="subtitle">(썰 이름을 클릭하면 복사할 수 있습니다)</div>
         <div class="password" onclick="copyToClipboard('TzrsPMPuP9MD3LjTyhvh2flA14wk1e1p9PgUWg2a0JuHd4NGhMOkDBxT1pEPllb68ZIntbExsn3Wt95ZHzMxcD31mtntyPGtoA47')">공중화장실에서 섹스한 썰🌶(매운맛) 비번</div>
         <div class="password" onclick="copyToClipboard('pas6vg3KRhJTai0LARwEfRWYWBiETfBfffHdNnPHI2Ujc0TFp8WIWJMeONxHKCbl1o07jZsiFo6gJLEwX64jzVkW0dijqhsgjnqa')">공중화장실에서 섹스한 썰🌿(순한맛) 비번</div>
         <div class="password" onclick="copyToClipboard('Fe8tqkSPIj4myPL0wGHcOXt7OnSDlYPYF4PEv1lG778gYaZ3sJ')">담배 썰 영상 비번</div>
         <div class="password" onclick="copyToClipboard('Dhdjeiei882ue')">첫경험 썰 비번</div>
         <div class="password" onclick="copyToClipboard('v5W3OZn1vTSpiw1rimJ4aE1sIiQBLBRcVRNntusGpPNkydEPlA73KURVdSNCKplslRco0a8PspdvrvZy1YpZTEwSUIdCTqkaGc4qD9W298kUKeSInVbo4S3mV6UCWp9jKhU7WEO4jKrCeACy1CIlBCJMnI1GPvex7v4qpFtFOvmWLXkSyAWRihs33sLBc47EJ7Xjn2Ne')">질싸할 뻔한 썰 비번</div>
+    </div>
+
+    <div id="limited-access-container" class="container" style="display:none">
+        <div class="title">섹시유수 썰 비번 모음 <span class="access-badge limited-access">제한적 접근 권한</span></div>
+        <div class="subtitle">(썰 이름을 클릭하면 복사할 수 있습니다)</div>
+        <div class="password" onclick="copyToClipboard('Dhdjeiei882ue')">첫경험 썰 비번</div>
+        <p style="color:#666; font-size:0.9rem; margin-top:16px;">※ 현재 계정은 제한된 콘텐츠만 이용 가능합니다.</p>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -53,19 +77,38 @@
         function copyToClipboard(t){navigator.clipboard.writeText(t).then(()=>alert("비밀번호가 복사되었습니다: "+t))}
         
         auth.onAuthStateChanged(u=>{
-            const c=document.querySelector('.container'),a=document.querySelector('.auth-container'),i=document.getElementById('user-info'),e=document.getElementById('user-email');
+            const fullContainer = document.getElementById('full-access-container');
+            const limitedContainer = document.getElementById('limited-access-container');
+            const a=document.querySelector('.auth-container');
+            const i=document.getElementById('user-info');
+            const e=document.getElementById('user-email');
+            const accessType = document.getElementById('access-type');
+            
             if(u){
                 a.style.display='none';
                 i.style.display='flex';
                 e.textContent=u.email;
-                if(fullAccess.includes(u.email)||limitedAccess.includes(u.email)){
-                    c.style.display='block';
-                    if(limitedAccess.includes(u.email))document.querySelectorAll('.password').forEach(p=>{if(!p.textContent.includes('첫경험'))p.style.display='none'});
+                
+                if(fullAccess.includes(u.email)){
+                    fullContainer.style.display='block';
+                    limitedContainer.style.display='none';
+                    accessType.textContent = '전체 권한';
+                    accessType.className = 'access-badge full-access';
+                }else if(limitedAccess.includes(u.email)){
+                    fullContainer.style.display='none';
+                    limitedContainer.style.display='block';
+                    accessType.textContent = '제한적 권한';
+                    accessType.className = 'access-badge limited-access';
                 }else{
                     document.body.innerHTML='<div class="container"><h2 style="color:#ff4757">접근 권한이 없습니다</h2><p>B독자 전용 페이지입니다</p></div>';
                     setTimeout(()=>location.href='https://yousoo68.github.io/SSUL/',2000);
                 }
-            }else{a.style.display='block';i.style.display='none';c.style.display='none'}
+            }else{
+                a.style.display='block';
+                i.style.display='none';
+                fullContainer.style.display='none';
+                limitedContainer.style.display='none';
+            }
         });
         
         document.getElementById('google-login-btn').addEventListener('click',()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(console.error));
