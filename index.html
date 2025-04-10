@@ -108,10 +108,6 @@
         
         document.getElementById('google-login-btn').addEventListener('click',()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(console.error));
         document.getElementById('logout-btn').addEventListener('click',()=>auth.signOut());
-        
-        if(document.referrer!=="https://yousoo68.github.io/vbjskgx/"||location.hostname!=="yousoo68.github.io"){
-            document.body.innerHTML='<div class="container"><h2>잘못된 접근</h2><p>정확한 링크를 통해 접속해주세요</p></div>';
-            setTimeout(()=>location.href="https://yousoo68.github.io/vbjskgx/",2500);
         }
     </script>
 </body>
