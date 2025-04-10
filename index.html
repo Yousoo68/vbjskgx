@@ -93,12 +93,7 @@
                     fullContainer.style.display='block';
                     limitedContainer.style.display='none';
                     accessType.textContent = '전체 권한';
-                    accessType.className = 'access-badge full-access';
-                }else if(limitedAccess.includes(u.email)){
-                    fullContainer.style.display='none';
-                    limitedContainer.style.display='block';
-                    accessType.textContent = '제한적 권한';
-                    accessType.className = 'access-badge limited-access';
+                    accessType.className = 'access-badge full-access'
                 }else{
                     document.body.innerHTML='<div class="container"><h2 style="color:#ff4757">접근 권한이 없습니다</h2><p>B독자 전용 페이지입니다</p></div>';
                     setTimeout(()=>location.href='https://yousoo68.github.io/SSUL/',2000);
