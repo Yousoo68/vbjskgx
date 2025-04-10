@@ -44,12 +44,11 @@
 
     <div id="user-info" class="user-info" style="display:none">
         <span id="user-email"></span>
-        <span id="access-type" class="access-badge"></span>
         <button id="logout-btn" class="logout-btn">로그아웃</button>
     </div>
 
     <div id="full-access-container" class="container" style="display:none">
-        <div class="title">섹시유수 썰 비번 모음 <span class="access-badge full-access">전체 접근 권한</span></div>
+        <div class="title">섹시유수 썰 비번 모음</div>
         <div class="subtitle">(썰 이름을 클릭하면 복사할 수 있습니다)</div>
         <div class="password" onclick="copyToClipboard('TzrsPMPuP9MD3LjTyhvh2flA14wk1e1p9PgUWg2a0JuHd4NGhMOkDBxT1pEPllb68ZIntbExsn3Wt95ZHzMxcD31mtntyPGtoA47')">공중화장실에서 섹스한 썰🌶(매운맛) 비번</div>
         <div class="password" onclick="copyToClipboard('pas6vg3KRhJTai0LARwEfRWYWBiETfBfffHdNnPHI2Ujc0TFp8WIWJMeONxHKCbl1o07jZsiFo6gJLEwX64jzVkW0dijqhsgjnqa')">공중화장실에서 섹스한 썰🌿(순한맛) 비번</div>
@@ -59,7 +58,7 @@
     </div>
 
     <div id="limited-access-container" class="container" style="display:none">
-        <div class="title">섹시유수 썰 비번 모음 <span class="access-badge limited-access">제한적 접근 권한</span></div>
+        <div class="title">섹시유수 썰 비번 모음</div>
         <div class="subtitle">(썰 이름을 클릭하면 복사할 수 있습니다)</div>
         <div class="password" onclick="copyToClipboard('Dhdjeiei882ue')">첫경험 썰 비번</div>
         <p style="color:#666; font-size:0.9rem; margin-top:16px;">※ 현재 계정은 제한된 콘텐츠만 이용 가능합니다.</p>
@@ -82,7 +81,6 @@
             const a=document.querySelector('.auth-container');
             const i=document.getElementById('user-info');
             const e=document.getElementById('user-email');
-            const accessType = document.getElementById('access-type');
             
             if(u){
                 a.style.display='none';
@@ -92,13 +90,9 @@
                 if(fullAccess.includes(u.email)){
                     fullContainer.style.display='block';
                     limitedContainer.style.display='none';
-                    accessType.textContent = '전체 권한';
-                    accessType.className = 'access-badge full-access';
                 }else if(limitedAccess.includes(u.email)){
                     fullContainer.style.display='none';
                     limitedContainer.style.display='block';
-                    accessType.textContent = '제한적 권한';
-                    accessType.className = 'access-badge limited-access';
                 }else{
                     document.body.innerHTML='<div class="container"><h2 style="color:#ff4757">접근 권한이 없습니다</h2><p>B독자 전용 페이지입니다</p></div>';
                     setTimeout(()=>location.href='https://yousoo68.github.io/SSUL/',2000);
