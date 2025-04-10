@@ -6,24 +6,22 @@
     <title>섹시유수 썰 비번 모음</title>
     <link rel="icon" href="favicon.ico">
     <style>
-        body{font-family:Arial;margin:0;background:#f9f9f9;min-height:100vh;display:flex;justify-content:center;align-items:center;text-align:center}
-        .container{background:#fff;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);padding:20px;max-width:90%;width:500px}
-        .title,.subtitle,.password{opacity:0;transition:opacity 0.5s}
-        .password{font-size:4vw;font-weight:700;color:#000;cursor:pointer;padding:10px;margin:5px 0;background:#f0f0f0;border-radius:5px;width:100%;word-break:break-all}
-        .password:active{background:#ddd}
-        .error{color:#000;font-weight:700;font-size:24px}
-        .auth-container{background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:90%;max-width:500px;padding:2rem}
-        .btn{background:#4361ee;color:#fff;border:none;padding:0.8rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;margin-bottom:1rem}
-        .btn-google{background:#4285F4;display:flex;align-items:center;justify-content:center}
-        .btn-google svg{width:18px;height:18px;margin-right:8px}
-        .user-info{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#fff;padding:8px 12px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-size:14px;z-index:1000;display:flex;align-items:center}
-        .logout-btn{margin-left:8px;background:#ff3333;color:#fff;border:none;border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer}
+        body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:16px}
+        .container{background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.1);padding:24px;width:100%;max-width:480px;box-sizing:border-box}
+        .title{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+        .subtitle{font-size:0.9rem;color:#666;margin-bottom:16px}
+        .password{font-size:1rem;font-weight:600;color:#4361ee;cursor:pointer;padding:12px;margin:8px 0;background:#f8f9ff;border-radius:8px;border:1px solid #e0e7ff;transition:all 0.2s;word-break:break-all}
+        .password:active{background:#e0e7ff;transform:scale(0.98)}
+        .auth-container{width:100%;max-width:480px}
+        .btn{background:#4361ee;color:#fff;border:none;padding:14px;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;margin-bottom:12px;transition:background 0.2s}
+        .btn:active{background:#3a56d4}
+        .user-info{position:fixed;bottom:16px;background:#fff;padding:8px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);font-size:0.9rem;display:flex;align-items:center;gap:8px}
+        .logout-btn{background:#ff4757;color:#fff;border:none;border-radius:4px;padding:4px 8px;cursor:pointer}
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <button id="google-login-btn" class="btn btn-google">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="white" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+        <button id="google-login-btn" class="btn">
             Google로 로그인
         </button>
     </div>
@@ -52,7 +50,7 @@
         const fullAccess=['fjrtufl9909@gmail.com','minjune003956@gmail.com','sexyyousoo68@gmail.com','seojunna73@gmail.com','chaejun0708@gmail.com','sonhyeonmins@gmail.com','rang330579@gmail.com','seonuh777@gmail.com','gogumaa0712@gmail.com','kjuho0716@gmail.com'];
         const limitedAccess=['shinjonghwan0430@gmail.com','fofmmm1605@gmail.com','shinyousoo68@gmail.com'];
         
-        function copyToClipboard(t){navigator.clipboard.writeText(t).then(()=>alert("비밀번호가 복사되었습니다: "+t)).catch(console.error)}
+        function copyToClipboard(t){navigator.clipboard.writeText(t).then(()=>alert("비밀번호가 복사되었습니다: "+t))}
         
         auth.onAuthStateChanged(u=>{
             const c=document.querySelector('.container'),a=document.querySelector('.auth-container'),i=document.getElementById('user-info'),e=document.getElementById('user-email');
@@ -61,26 +59,21 @@
                 i.style.display='flex';
                 e.textContent=u.email;
                 if(fullAccess.includes(u.email)||limitedAccess.includes(u.email)){
-                    c.style.display='flex';
+                    c.style.display='block';
                     if(limitedAccess.includes(u.email))document.querySelectorAll('.password').forEach(p=>{if(!p.textContent.includes('첫경험'))p.style.display='none'});
-                    setTimeout(()=>document.querySelectorAll('.title, .subtitle, .password').forEach(el=>el.style.opacity=1),2000);
                 }else{
-                    document.body.innerHTML='<div class="error">B독자 이시군요</div>';
-                    setTimeout(()=>window.location.href='https://yousoo68.github.io/SSUL/',2000);
+                    document.body.innerHTML='<div class="container"><h2 style="color:#ff4757">접근 권한이 없습니다</h2><p>B독자 전용 페이지입니다</p></div>';
+                    setTimeout(()=>location.href='https://yousoo68.github.io/SSUL/',2000);
                 }
-            }else{
-                a.style.display='block';
-                i.style.display='none';
-                c.style.display='none';
-            }
+            }else{a.style.display='block';i.style.display='none';c.style.display='none'}
         });
         
-        document.getElementById('google-login-btn').addEventListener('click',()=>{const p=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(p).catch(e=>console.error('Google 로그인 오류:',e))});
-        document.getElementById('logout-btn').addEventListener('click',()=>auth.signOut().catch(e=>console.error('로그아웃 오류:',e)));
+        document.getElementById('google-login-btn').addEventListener('click',()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(console.error));
+        document.getElementById('logout-btn').addEventListener('click',()=>auth.signOut());
         
-        if(document.referrer!=="https://yousoo68.github.io/vbjskgx/"||window.location.hostname!=="yousoo68.github.io"){
-            document.body.innerHTML="<h1 style='text-align:center;margin-top:50px;color:#6a5acd'>이 페이지는 https://yousoo68.github.io/fjYxbSA/ 링크를 통해서만 접속할 수 있습니다.</h1>";
-            setTimeout(()=>window.location.href="https://yousoo68.github.io/vbjskgx/",2500);
+        if(document.referrer!=="https://yousoo68.github.io/vbjskgx/"||location.hostname!=="yousoo68.github.io"){
+            document.body.innerHTML='<div class="container"><h2>잘못된 접근</h2><p>정확한 링크를 통해 접속해주세요</p></div>';
+            setTimeout(()=>location.href="https://yousoo68.github.io/vbjskgx/",2500);
         }
     </script>
 </body>
